@@ -3,6 +3,7 @@ import { Header } from "./components/Header/Header";
 import { Card } from "./components/Card/Card";
 import { Snap } from "./components/Snap/Snap";
 import { CardContainer } from "./components/CardContainer/CardContainer";
+import { ControlsContainer } from "./components/ControlsContainer/ControlsContainer";
 
 function App() {
     const [card1, setCard1] = useState({
@@ -96,25 +97,30 @@ function App() {
     return (
         <>
             <Header />
-            <CardContainer>
-                <Card error={error} isLoading={false} cardData={card2} />
-                <Card error={error} isLoading={isLoading} cardData={card1} />
-                <Snap
-                    isLoading={isLoading}
-                    updateSnapValues={setSnapValues}
-                    updateSnapSuits={setSnapSuits}
-                    cardData1={card1}
-                    cardData2={card2}
-                />
-            </CardContainer>
-            <button
-                onClick={() => {
-                    drawCardHandler();
-                    passCardHandler();
-                }}
-            >
-                LOAD
-            </button>
+            <main>
+                <CardContainer>
+                    <Card error={error} isLoading={false} cardData={card2} />
+                    <Card
+                        error={error}
+                        isLoading={isLoading}
+                        cardData={card1}
+                    />
+                    <Snap
+                        isLoading={isLoading}
+                        updateSnapValues={setSnapValues}
+                        updateSnapSuits={setSnapSuits}
+                        cardData1={card1}
+                        cardData2={card2}
+                    />
+                </CardContainer>
+                <ControlsContainer
+                    cardsRemaining={card1.remaining}
+                    drawCardHandler={drawCardHandler}
+                    passCardHandler={passCardHandler}
+                    snapSuits={snapSuits}
+                    snapValues={snapValues}
+                ></ControlsContainer>
+            </main>
         </>
     );
 }
