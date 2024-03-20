@@ -1,22 +1,30 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { Header } from "../Header/Header";
 
-afterEach(() => {
-    cleanup();
-});
+describe("<Header />", () => {
+    const elements = {
+        testHeader: "test-header",
 
-test("render header component", () => {
-    render(<Header />);
+        headerLogo: "header-logo",
+    };
 
-    const headerComponent = screen.getByTestId("test-header");
+    afterEach(() => {
+        cleanup();
+    });
 
-    expect(headerComponent).toBeInTheDocument();
-});
+    test("render header component", () => {
+        render(<Header />);
 
-test("render header logo", () => {
-    render(<Header />);
+        const headerComponent = screen.getByTestId(elements.testHeader);
 
-    const headerComponentLogo = screen.getByTestId("header-logo");
+        expect(headerComponent).toBeInTheDocument();
+    });
 
-    expect(headerComponentLogo).toBeInTheDocument();
+    test("render header logo", () => {
+        render(<Header />);
+
+        const headerComponentLogo = screen.getByTestId(elements.headerLogo);
+
+        expect(headerComponentLogo).toBeInTheDocument();
+    });
 });
