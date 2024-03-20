@@ -12,10 +12,10 @@ const rotate = keyframes`
 
 const StyledSnapWrapper = styled.div`
     position: absolute;
-    top: 0.5rem;
-    min-height: 2rem;
+    top: 0;
+    min-height: 2.5rem;
     min-width: 6rem;
-    font-size: 3rem;
+    font-size: 2.8rem;
     font-weight: bold;
     color: #800000;
     animation: ${rotate} 0.5s linear;
@@ -51,29 +51,31 @@ export const Snap = ({
 
     const card2Value = cardData2 ? cardData2?.cards[0]?.value : "";
 
-    const carsLeft = cardData1.remaining;
+    const cardsRemaining = cardData1.remaining;
 
     // States management
     useEffect(() => {
-        if (cardData1 && cardData2 && card1Value === card2Value) {
-            updateSnapValues((prevState) => prevState + 1);
-        } else if (cardData1 && cardData2 && card1Suit === card2Suit) {
-            updateSnapSuits((prevState) => prevState + 1);
+        if (!isLoading && cardsRemaining < 52) {
+            if (card1Value === card2Value) {
+                updateSnapValues((prevState) => prevState + 1);
+            } else if (card1Suit === card2Suit) {
+                updateSnapSuits((prevState) => prevState + 1);
+            }
         }
     }, [
-        cardData1,
-        cardData2,
         card1Suit,
         card2Suit,
         card1Value,
         card2Value,
         updateSnapValues,
         updateSnapSuits,
+        isLoading,
+        cardsRemaining,
     ]);
 
     // DOM management
 
-    if (carsLeft < 52 && !isLoading && card1Value === card2Value) {
+    if (cardsRemaining < 52 && !isLoading && card1Value === card2Value) {
         return (
             <StyledSnapWrapper data-testid="snap-value">
                 SNAP VALUE!
@@ -82,7 +84,7 @@ export const Snap = ({
     }
     // if initial state (cards=52), don't render
     // if isLoading is true, don't render -> cards will have for a second the same value, waiting for state update
-    if (carsLeft < 52 && !isLoading && card1Suit === card2Suit) {
+    if (cardsRemaining < 52 && !isLoading && card1Suit === card2Suit) {
         return (
             <StyledSnapWrapper data-testid="snap-suit">
                 SNAP SUIT!
