@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Header } from "./components/Header/Header";
 import { Card } from "./components/Card/Card";
 import { Snap } from "./components/Snap/Snap";
+import { CardContainer } from "./components/CardContainer/CardContainer";
 
 function App() {
     const [card1, setCard1] = useState({
@@ -95,7 +96,7 @@ function App() {
     return (
         <>
             <Header />
-            <>
+            <CardContainer>
                 <Card error={error} isLoading={false} cardData={card2} />
                 <Card error={error} isLoading={isLoading} cardData={card1} />
                 <Snap
@@ -105,7 +106,7 @@ function App() {
                     cardData1={card1}
                     cardData2={card2}
                 />
-            </>
+            </CardContainer>
             <button
                 onClick={() => {
                     drawCardHandler();

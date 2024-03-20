@@ -42,6 +42,7 @@ export const Snap = ({
     cardData2,
     isLoading,
 }: Props) => {
+    // get data from the cardData object
     const card1Suit = cardData1 ? cardData1?.cards[0]?.suit : "";
 
     const card2Suit = cardData2 ? cardData2?.cards[0]?.suit : "";
@@ -79,6 +80,8 @@ export const Snap = ({
             </StyledSnapWrapper>
         );
     }
+    // if initial state (cards=52), don't render
+    // if isLoading is true, don't render -> cards will have for a second the same value, waiting for state update
     if (carsLeft < 52 && !isLoading && card1Suit === card2Suit) {
         return (
             <StyledSnapWrapper data-testid="snap-suit">
