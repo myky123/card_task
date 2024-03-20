@@ -42,6 +42,7 @@ type Props = {
 export const Card = ({ cardData, isLoading, error }: Props) => {
     const imgElement = (
         <img
+            data-testid="card-image"
             src={cardData?.cards[0]?.image}
             alt={`Card ${cardData?.cards[0]?.suit} ${cardData?.cards[0]?.value}`}
         />

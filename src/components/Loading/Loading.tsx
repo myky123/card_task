@@ -17,5 +17,9 @@ type Props = {
 };
 
 export const Loading = ({ text }: Props) => {
-    return <StyledLoadingWrapper>{text}</StyledLoadingWrapper>;
+    return (
+        <StyledLoadingWrapper data-testid="card-loading">
+            {text}
+        </StyledLoadingWrapper>
+    );
 };
