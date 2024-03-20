@@ -43,6 +43,7 @@ export const Snap = ({
     cardData2,
     isLoading,
 }: Props) => {
+    console.log(cardData1);
     // get data from the cardData object
     const card1Suit = cardData1 ? cardData1?.cards[0]?.suit : "";
 

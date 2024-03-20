@@ -5,8 +5,8 @@ export type SuitCounts = {
     CLUBS: number;
 };
 
-export type CardProps  = {
+export type CardProps = {
     image: string;
     suit: string;
-    value: string
-}
+    value: string;
+};
