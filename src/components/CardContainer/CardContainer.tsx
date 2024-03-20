@@ -15,6 +15,8 @@ type Props = {
     children: ReactNode;
 };
 
+//todo test if children is rendered
+
 export const CardContainer = ({ children }: Props) => {
     return <StyledCardContainer>{children}</StyledCardContainer>;
 };

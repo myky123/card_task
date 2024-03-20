@@ -1,27 +1,21 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import { Card } from "../Card/Card";
-import { error } from "console";
+import { Card, Props } from "../Card/Card";
 
 describe("<Card />", () => {
     const elements = {
         testCard: "test-card",
-
         cardImage: "card-image",
-
         cardLoading: "card-loading",
     };
 
-    const testProps = {
+    const testProps: Props = {
         cardData: {
             remaining: 1,
-
             cards: [
                 { image: "test-url", suit: "test-suit", value: "test-value" },
             ],
         },
-
         isLoading: false,
-
         error: "",
     };
 

@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Dispatch, SetStateAction, useEffect } from "react";
+import { CardProps } from "../../types";
 
 const rotate = keyframes`
   from {
@@ -25,11 +26,11 @@ type Props = {
     updateSnapValues: Dispatch<SetStateAction<number>>;
     updateSnapSuits: Dispatch<SetStateAction<number>>;
     cardData1: {
-        cards: { image: string; suit: string; value: string }[];
+        cards: CardProps[];
         remaining: number;
     };
     cardData2: {
-        cards: { image: string; suit: string; value: string }[];
+        cards: CardProps[];
         remaining: number;
     };
     isLoading: boolean;

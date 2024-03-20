@@ -15,7 +15,7 @@ const StyledButton = styled.button`
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    padding: 15px 35px;
+    padding: 1rem 2rem;
     margin-bottom: 1rem;
     transition: box-shadow 0.2s, -ms-transform 0.1s, 
 
@@ -52,8 +52,6 @@ export const ControlsContainer = ({
     snapValues,
     snapSuits,
 }: Props) => {
-    console.log(snapValues);
-    console.log(snapSuits);
     return (
         <StyledControlsContainer>
             {cardsRemaining > 0 && (

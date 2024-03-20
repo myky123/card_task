@@ -1,3 +1,4 @@
+import { CardProps } from "../../types";
 import { Loading } from "../Loading/Loading";
 import styled from "styled-components";
 
@@ -30,9 +31,9 @@ const StyledErrorLabel = styled.p`
     font-weight: bold;
 `;
 
-type Props = {
+export type Props = {
     cardData: {
-        cards: { image: string; suit: string; value: string }[];
+        cards: CardProps[];
         remaining: number;
     };
     isLoading: boolean;
@@ -43,8 +44,8 @@ export const Card = ({ cardData, isLoading, error }: Props) => {
     const imgElement = (
         <img
             data-testid="card-image"
-            src={cardData?.cards[0]?.image}
-            alt={`Card ${cardData?.cards[0]?.suit} ${cardData?.cards[0]?.value}`}
+            src={cardData.cards[0].image}
+            alt={`Card ${cardData.cards[0].suit} ${cardData.cards[0].value}`}
         />
     );
 
@@ -58,7 +59,7 @@ export const Card = ({ cardData, isLoading, error }: Props) => {
                 </StyledErrorWrapper>
             )}
 
-            {!isLoading && cardData && cardData?.remaining > 0 && imgElement}
+            {!isLoading && cardData && cardData.remaining > 0 && imgElement}
         </StyledCardWrapper>
     );
 };
