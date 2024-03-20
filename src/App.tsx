@@ -1,12 +1,30 @@
 import { useEffect, useState } from "react";
 import { Header } from "./components/Header/Header";
+import { Card } from "./components/Card/Card";
 
 function App() {
-    const [card1, setCard1] = useState();
-    const [card2, setCard2] = useState();
+    const [card1, setCard1] = useState({
+        cards: [
+            {
+                image: "https://www.deckofcardsapi.com/static/img/back.png",
+                suit: "",
+                value: "",
+            },
+        ],
+        remaining: 52,
+    });
+    const [card2, setCard2] = useState({
+        cards: [
+            {
+                image: "https://www.deckofcardsapi.com/static/img/back.png",
+                suit: "",
+                value: "",
+            },
+        ],
+        remaining: 52,
+    });
     const [deckId, setDeckId] = useState("");
     const [error, setError] = useState("");
-    const [cardsLeft, setCardsLeft] = useState(52);
     const [isLoading, setIsLoading] = useState(false);
 
     const drawCardHandler = async () => {
@@ -23,7 +41,6 @@ function App() {
             const card = await response.json();
 
             setIsLoading(false);
-            setCardsLeft(card.remaining);
             setCard1(card);
             setError("");
         } catch (error: unknown) {
@@ -61,12 +78,31 @@ function App() {
         }
     };
 
+    const passCardHandler = () => {
+        setCard1((prevState) => {
+            setCard2(prevState);
+            return prevState;
+        });
+    };
+
     useEffect(() => {
         fetchDeckHandler(1);
     }, []);
     return (
         <>
             <Header />
+            <>
+                <Card error={error} isLoading={false} cardData={card2} />
+                <Card error={error} isLoading={isLoading} cardData={card1} />
+            </>
+            <button
+                onClick={() => {
+                    drawCardHandler();
+                    passCardHandler();
+                }}
+            >
+                LOAD
+            </button>
         </>
     );
 }

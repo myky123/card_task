@@ -4,6 +4,7 @@ import styled from "styled-components";
 const StyledLoadingWrapper = styled.div`
     display: flex;
     align-items: center;
+    position: relative;
     justify-content: center;
     color: black;
     width: 100%;
