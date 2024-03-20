@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Header } from "./components/Header/Header";
 import { Card } from "./components/Card/Card";
+import { Snap } from "./components/Snap/Snap";
 
 function App() {
     const [card1, setCard1] = useState({
@@ -26,6 +27,9 @@ function App() {
     const [deckId, setDeckId] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    /* Snap states are managed within the Snap component */
+    const [snapValues, setSnapValues] = useState(0);
+    const [snapSuits, setSnapSuits] = useState(0);
 
     const drawCardHandler = async () => {
         try {
@@ -94,6 +98,13 @@ function App() {
             <>
                 <Card error={error} isLoading={false} cardData={card2} />
                 <Card error={error} isLoading={isLoading} cardData={card1} />
+                <Snap
+                    isLoading={isLoading}
+                    updateSnapValues={setSnapValues}
+                    updateSnapSuits={setSnapSuits}
+                    cardData1={card1}
+                    cardData2={card2}
+                />
             </>
             <button
                 onClick={() => {
