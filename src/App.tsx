@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/Header/Header";
 import { Card } from "./components/Card/Card";
 import { Snap } from "./components/Snap/Snap";
 import { CardContainer } from "./components/CardContainer/CardContainer";
 import { ControlsContainer } from "./components/ControlsContainer/ControlsContainer";
+import { ProbabilityBoard } from "./components/ProbabilityBoard/ProbabilityBoard";
 
 function App() {
     const [card1, setCard1] = useState({
@@ -32,6 +33,18 @@ function App() {
     /* Snap states are managed within the Snap component */
     const [snapValues, setSnapValues] = useState(0);
     const [snapSuits, setSnapSuits] = useState(0);
+    const [availableSuits, setAvailableSuits] = useState({
+        HEARTS: 13,
+        DIAMONDS: 13,
+        SPADES: 13,
+        CLUBS: 13,
+    });
+    const [probability, setProbability] = useState({
+        HEARTSPR: 0,
+        DIAMONDSPR: 0,
+        SPADESPR: 0,
+        CLUBSPR: 0,
+    });
 
     const drawCardHandler = async () => {
         try {
@@ -91,6 +104,70 @@ function App() {
         });
     };
 
+    const calcProbability = (
+        desiredPosibilities: number,
+        allPossibilities: number
+    ) => {
+        if (allPossibilities === 0 || desiredPosibilities === 0) {
+            return;
+        }
+
+        let probability =
+            (desiredPosibilities / allPossibilities) *
+            ((desiredPosibilities - 1) / (allPossibilities - 1));
+
+        probability = Math.round((probability + Number.EPSILON) * 1000) / 1000;
+        const probabilityPercentage = (probability * 100).toFixed(2);
+        return probabilityPercentage;
+    };
+
+    const updateProbability = useCallback(() => {
+        const cardSuit = card1.cards[0].suit;
+        let availableSuitsCopy: { [key: string]: any } = {};
+        let updatedValues: { [key: string]: any } = {};
+
+        availableSuitsCopy = { ...availableSuits };
+        updatedValues = {};
+
+        for (const key in availableSuitsCopy) {
+            // console.log(cardSuit);
+            if (key === `${cardSuit}PR`) {
+                updatedValues[`${key}PR`] = calcProbability(
+                    availableSuitsCopy[cardSuit],
+                    card1.remaining
+                );
+            } else {
+                updatedValues[`${key}PR`] = calcProbability(
+                    availableSuitsCopy[key],
+                    card1.remaining
+                );
+            }
+        }
+
+        setProbability((prevState) => ({
+            ...prevState,
+            ...updatedValues,
+        }));
+    }, [card1]);
+
+    useEffect(() => {
+        type SuitCounts = {
+            HEARTS: number;
+            DIAMONDS: number;
+            SPADES: number;
+            CLUBS: number;
+        };
+
+        if (card1.remaining === 52) return;
+        const cardSuit = card1.cards[0].suit;
+
+        setAvailableSuits((prevState: SuitCounts) => ({
+            ...prevState,
+            [cardSuit]: prevState[cardSuit as keyof SuitCounts] - 1,
+        }));
+        updateProbability();
+    }, [card1, updateProbability]);
+
     useEffect(() => {
         fetchDeckHandler(1);
     }, []);
@@ -120,6 +197,7 @@ function App() {
                     snapSuits={snapSuits}
                     snapValues={snapValues}
                 ></ControlsContainer>
+                <ProbabilityBoard probability={probability} />
             </main>
         </>
     );
